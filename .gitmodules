@@ -1,0 +1,7 @@
+[submodule "CMSSW_7_4_10/src/HiggsAnalysis/CombinedLimit"]
+	path = CMSSW_7_4_10/src/HiggsAnalysis/CombinedLimit
+	url = git@github.com:cms-analysis/HiggsAnalysis-CombinedLimit
+	branch = 74x-root6
+[submodule "CMSSW_7_4_10/src/HiggsAnalysis/ZZMatrixElement"]
+	path = CMSSW_7_4_10/src/HiggsAnalysis/ZZMatrixElement
+	url = git@github.com:cms-analysis/HiggsAnalysis-ZZMatrixElement
