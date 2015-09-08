@@ -255,7 +255,7 @@ Float_t melaHelpers::melaBranchMEInterpreter(const ZZCandidate* cand, string& br
         else gCoef.push_back(pair<int, double>(11, 12100.42*coeffScale)); // For a mostly positive discriminant
       }
     }
-
+  
     int sgList = gList[0].size();
     bool** gFind;
     if (sgList>0){
@@ -325,7 +325,7 @@ Float_t melaHelpers::melaBranchMEInterpreter(const ZZCandidate* cand, string& br
   }
   else if ((myProduction==TVar::WH || myProduction==TVar::ZH) && myME==TVar::JHUGen && V_daughter_ids.size() > 1){
     Float_t tmpME = 0;
-
+    
     // Unfortunately, cannot use vector::data
     TLorentzVector myjets[2] ={ V_daughters.at(0), V_daughters.at(1) };
     TLorentzVector daughters[4] ={ Higgs_daughters.at(0), Higgs_daughters.at(1), Higgs_daughters.at(2), Higgs_daughters.at(3) };
@@ -487,7 +487,7 @@ void melaHelpers::computeAngles(
   TVector3 normal1_BX = (p4M11_BX.Vect().Cross(p4M12_BX.Vect())).Unit();
   TVector3 normal2_BX = (p4M21_BX.Vect().Cross(p4M22_BX.Vect())).Unit();
   TVector3 normalSC_BX = (beamAxis.Cross(p3V1_BX)).Unit();
-
+  
 /*
   cout << "p4M11: "
     << p4M11.X() << '\t'
