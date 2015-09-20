@@ -2,3 +2,4 @@ analyzer
 loadLib.cc
 trimPythia.cc
 !macros/*
+file.txt
