@@ -212,10 +212,8 @@ Float_t melaHelpers::melaBranchMEInterpreter(const ZZCandidate* cand, string& br
         gCoef.push_back(pair<int, double>(2, 0));
       }
       else if (myProduction==TVar::JJGG){ // 2-jets ggH
-        double coeffScale = 1.;
-        if (myME==TVar::JHUGen) coeffScale = sqrt(1.8e-5);
-        gCoef.push_back(pair<int, double>(0, 1.*coeffScale));
-        gCoef.push_back(pair<int, double>(2, sqrt(1.0017)*coeffScale));
+        gCoef.push_back(pair<int, double>(0, 1));
+        gCoef.push_back(pair<int, double>(2, sqrt(1.0017)));
       }
       else if (myProduction==TVar::ZZGG && branchname.find("prod")!=string::npos){ // 0-jet ggH prod. ME, the same as 2-jets ggH for now in absolute scale
         gCoef.push_back(pair<int, double>(0, 1));
@@ -403,8 +401,8 @@ void melaHelpers::computeAngles(
   float& Phi1){
 
   if (mela::forbidMassiveLeptons){
-    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21)) mela::constrainedRemoveLeptonMass(p4M11, p4M12);
-    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21)) mela::constrainedRemoveLeptonMass(p4M21, p4M22);
+    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept1Id)==25 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21 || fabs(Z1_lept2Id)==25)) mela::constrainedRemoveLeptonMass(p4M11, p4M12);
+    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept1Id)==25 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21 || fabs(Z2_lept2Id)==25)) mela::constrainedRemoveLeptonMass(p4M21, p4M22);
   }
 
   //build Z 4-vectors
@@ -619,8 +617,8 @@ void melaHelpers::computeVBFangles(
   ){
 
   if (mela::forbidMassiveLeptons){
-    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21)) mela::constrainedRemoveLeptonMass(p4M11, p4M12);
-    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21)) mela::constrainedRemoveLeptonMass(p4M21, p4M22);
+    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept1Id)==25 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21 || fabs(Z1_lept2Id)==25)) mela::constrainedRemoveLeptonMass(p4M11, p4M12);
+    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept1Id)==25 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21 || fabs(Z2_lept2Id)==25)) mela::constrainedRemoveLeptonMass(p4M21, p4M22);
   }
 
   TLorentzVector jet1massless, jet2massless;
@@ -735,8 +733,8 @@ void melaHelpers::computeVHangles(
 
 
   if (mela::forbidMassiveLeptons){
-    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21)) mela::constrainedRemoveLeptonMass(p4M11, p4M12);
-    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21)) mela::constrainedRemoveLeptonMass(p4M21, p4M22);
+    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept1Id)==25 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21 || fabs(Z1_lept2Id)==25)) mela::constrainedRemoveLeptonMass(p4M11, p4M12);
+    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept1Id)==25 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21 || fabs(Z2_lept2Id)==25)) mela::constrainedRemoveLeptonMass(p4M21, p4M22);
   }
 
   // Build Z 4-vectors
