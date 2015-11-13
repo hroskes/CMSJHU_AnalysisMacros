@@ -38,10 +38,12 @@ protected:
   void bookAngularBranches(bool doSetAddress);
   void getAngularBranches(vector<string>& blist, Int_t prodFlag /* 0: Decay, 1: VBF, 2: VH */, bool isGen);
 
+#ifdef CMSMELA
   void bookMELABranches(bool doSetAddress);
   vector<string> constructMELABranchList(bool doSetAddress);
   void setupMELASignalMECases(vector<string>& accumulatedlist, TVar::Production prod, TVar::MatrixElement me, bool isGen, bool isProdME, bool doSetAddress);
   vector<string> getMELASignalMEBranches(TVar::Production prod, TVar::MatrixElement me, vector<string> gList, vector<int> gCountRe, vector<int> gCountIm, bool isGen, bool isProdME, bool doSetAddress);
+#endif
 
   OptionParser* options;
   vector<string> melaProbBranches;

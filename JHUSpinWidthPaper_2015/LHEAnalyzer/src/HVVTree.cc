@@ -78,7 +78,9 @@ void HVVTree::bookAllBranches(bool doSetAddress){
     bookPtEtaPhiMassIdBranches("Lep4", BranchTypes::bFloat, doSetAddress, true, false, false);
   }
   bookAngularBranches(doSetAddress);
+#ifdef CMSMELA
   if (options->initializeMELA() || doSetAddress) bookMELABranches(doSetAddress);
+#endif
   actuateBranches(doSetAddress);
 }
 
@@ -175,6 +177,7 @@ void HVVTree::getAngularBranches(vector<string>& blist, Int_t prodFlag /* 0: Dec
 }
 
 
+#ifdef CMSMELA
 void HVVTree::bookMELABranches(bool doSetAddress){
   vector<string> tmpBranchList = constructMELABranchList(doSetAddress);
   for (int b=0; b<tmpBranchList.size(); b++){
@@ -491,6 +494,7 @@ vector<string> HVVTree::getMELASignalMEBranches(TVar::Production prod, TVar::Mat
   delete[] gCount;
   return blist;
 }
+#endif
 
 
 void HVVTree::fillMotherInfo(Particle* mother){

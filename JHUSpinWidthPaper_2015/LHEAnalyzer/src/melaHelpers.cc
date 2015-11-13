@@ -405,6 +405,24 @@ Float_t melaHelpers::melaBranchMEInterpreter(const ZZCandidate* cand, string& br
   }
   return result;
 }
+#else
+namespace mela{
+  void computeJetMassless(TLorentzVector massiveJet, TLorentzVector& masslessJet){
+    double energy, p3sq, ratio;
+    energy = massiveJet.T();
+    p3sq = massiveJet.P();
+    ratio = (p3sq>0 ? (energy / p3sq) : 1);
+    masslessJet.SetPxPyPzE(massiveJet.Px()*ratio, massiveJet.Py()*ratio, massiveJet.Pz()*ratio, energy);
+  }
+  void computeFakeJet(TLorentzVector realJet, TLorentzVector others, TLorentzVector& fakeJet){
+    TLorentzVector masslessRealJet(0, 0, 0, 0);
+    mela::computeJetMassless(realJet, masslessRealJet);
+
+    fakeJet = others + masslessRealJet;
+    fakeJet.SetVect(-fakeJet.Vect());
+    fakeJet.SetE(fakeJet.P());
+  }
+}
 #endif
 
 
