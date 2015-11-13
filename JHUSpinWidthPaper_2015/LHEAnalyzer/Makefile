@@ -1,3 +1,4 @@
+UseMELA       = Yes
 
 ROOTCFLAGS    = $(shell root-config --cflags) -Lrootlib -lEG
 ROOTGLIBS     = $(shell root-config --glibs) -Lrootlib -lEG
@@ -22,7 +23,12 @@ CXXFLAGS      += $(ROOTCFLAGS) -I$(ROOFITSYS)/include/ -I$(CMSSW_BASE)/src
 NGLIBS         = $(ROOTGLIBS)
 # Hack here, because RooFit is removed from ROOT:
 NGLIBS        += -L $(ROOFITSYS)/lib/ -lMinuit -lRooFitCore -lRooFit #-lboost_regex
-NGLIBS  += -L $(CMSSW_BASE)/lib/$(SCRAM_ARCH)/ -lZZMatrixElementMELA
+NGLIBS        += -L $(CMSSW_BASE)/lib/$(SCRAM_ARCH)/ 
+
+ifeq ($(UseMELA), Yes)
+  NGLIBS        += -lZZMatrixElementMELA -DCMSMELA
+endif
+
 GLIBS          = $(filter-out -lNew, $(NGLIBS))
 
 

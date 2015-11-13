@@ -19,7 +19,11 @@ using namespace std;
 class OptionParser{
 public:
   OptionParser(int argc, char** argv);
-  ~OptionParser(){ deconfigureMela(); };
+  ~OptionParser(){
+#ifdef CMSMELA
+    deconfigureMela();
+#endif
+  };
 
   void analyze();
   void splitOption(string rawoption, string& wish, string& value, char delimiter='=');

@@ -92,8 +92,10 @@ void OptionParser::analyze(){
   // Print help if needed and abort at this point, nowhere later
   if (hasInvalidOption) printOptionsHelp();
 
+#ifdef CMSMELA
   // Initialize the global Mela if needed
   configureMela();
+#endif
 }
 void OptionParser::splitOption(string rawoption, string& wish, string& value, char delimiter){
   size_t posEq = rawoption.find(delimiter);
@@ -295,7 +297,9 @@ void OptionParser::interpretOption(string wish, string value){
   else if (wish=="includeRecoProdProb") splitOptionRecursive(value, includeRecoProdProb, ',');
   else if (wish=="includeGenDecayProb") splitOptionRecursive(value, includeGenDecayProb, ',');
   else if (wish=="includeGenProdProb") splitOptionRecursive(value, includeGenProdProb, ',');
+#ifdef CMSMELA
   else if (wish=="sampleProductionId") extractMelaGenProdId(value);
+#endif
 
   else cerr << "Unknown specified argument: " << value << " with specifier " << wish << endl;
 }

@@ -529,7 +529,9 @@ void HVVTree::fillCandidate(ZZCandidate* pH, bool isGen){
   if (options->doComputeVBFAngles()) fillVBFProductionAngles(pH, isGen);
   if (options->doComputeVHAngles()) fillVHProductionAngles(pH, isGen);
 
+#ifdef CMSMELA
   if (melaProbBranches.size()>0) fillMELAProbabilities(pH, isGen); // Do it at the last step
+#endif
 }
 void HVVTree::fillCandidateDaughters(ZZCandidate* pH, bool isGen){
   string varname;
@@ -1079,6 +1081,7 @@ void HVVTree::fillVHProductionAngles(ZZCandidate* pH, bool isGen){
 }
 
 
+#ifdef CMSMELA
 void HVVTree::fillMELAProbabilities(ZZCandidate* pH, bool isGen){
   if (pH==0) return;
 
@@ -1089,6 +1092,7 @@ void HVVTree::fillMELAProbabilities(ZZCandidate* pH, bool isGen){
     if (prob!=0) setVal(branchname, prob);
   }
 }
+#endif
 
 
 void HVVTree::fillEventVariables(Float_t weight, Int_t passSelection){

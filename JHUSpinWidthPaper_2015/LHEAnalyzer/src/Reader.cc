@@ -196,7 +196,9 @@ void Reader::run(){
             if (options->doComputeDecayAngles()) tree->fillDecayAngles(genCand, true);
             if (options->doComputeVBFAngles()) tree->fillVBFProductionAngles(genCand, true);
             if (options->doComputeVHAngles()) tree->fillVHProductionAngles(genCand, true);
+#ifdef CMSMELA
             if (options->initializeMELA()) tree->fillMELAProbabilities(genCand, true);
+#endif
           }
           if (recoCand!=0){
             if (options->recoSelectionMode()!=0){
@@ -207,7 +209,9 @@ void Reader::run(){
               if (options->doComputeDecayAngles()) tree->fillDecayAngles(recoCand, false);
               if (options->doComputeVBFAngles()) tree->fillVBFProductionAngles(recoCand, false);
               if (options->doComputeVHAngles()) tree->fillVHProductionAngles(recoCand, false);
+#ifdef CMSMELA
               if (options->initializeMELA()) tree->fillMELAProbabilities(recoCand, false);
+#endif
             }
           }
           else if (options->recoSelectionMode()!=0) tree->fillEventVariables(*((Float_t*)tree->getBranchHandleRef("MC_weight")), 0 /*isSelected*/);
