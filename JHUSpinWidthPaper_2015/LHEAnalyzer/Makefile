@@ -1,4 +1,4 @@
-UseMELA       = Yes
+UseMELA       = No
 
 ROOTCFLAGS    = $(shell root-config --cflags) -Lrootlib -lEG
 ROOTGLIBS     = $(shell root-config --glibs) -Lrootlib -lEG
