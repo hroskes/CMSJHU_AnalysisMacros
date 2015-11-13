@@ -61,7 +61,9 @@ public:
   Bool_t hasRecoDecayME(string str);
   Bool_t hasGenProdME(string str);
   Bool_t hasRecoProdME(string str);
+#ifdef CMSMELA
   pair<TVar::Production, TVar::MatrixElement> getSampleProductionId(){ return sampleProductionId; }
+#endif
 
 
 protected:
@@ -104,7 +106,9 @@ protected:
   Int_t maxEvents;
 
   // Mela probabilities to include, has to be in abbreviated form (eg. "All", "None", "p0plus", "g1", "g1_prime2" etc.)
+#ifdef CMSMELA
   pair<TVar::Production, TVar::MatrixElement> sampleProductionId;
+#endif
   vector<string> includeGenDecayProb;
   vector<string> includeRecoDecayProb;
   vector<string> includeGenProdProb;

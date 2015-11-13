@@ -12,7 +12,9 @@ removeDaughterMasses(1), // Force lepton masses to 0 in MELA
 computeDecayAngles(1), // Decay angles
 computeVBFAngles(0), // VBF production angles
 computeVHAngles(0), // VH production angles
+#ifdef CMSMELA
 sampleProductionId(TVar::ZZGG, TVar::JHUGen), // Sample gen. production mode
+#endif
 fileLevel(0), // -1: ReadMode, 0: LHE, 1: Pythia,
 isGenHZZ(1), // H->ZZ or H->WW
 isRecoHZZ(1), // H->ZZ or H->WW
@@ -79,7 +81,9 @@ void OptionParser::analyze(){
   if (mPOLE==0 || wPOLE==0 || erg_tev==0){ cerr << "Cannot have mH, GammaH or sqrts == 0" << endl; if(!hasInvalidOption) hasInvalidOption=true; }
   if (genHiggsCandidateSelectionScheme>=HiggsComparators::nCandidateSelections){ cerr << "Gen. H selection scheme is invalid!" << endl; if(!hasInvalidOption) hasInvalidOption=true; }
   if (recoHiggsCandidateSelectionScheme>=HiggsComparators::nCandidateSelections){ cerr << "Reco. H selection scheme is invalid!" << endl; if(!hasInvalidOption) hasInvalidOption=true; }
+#ifdef CMSMELA
   if (hasGenProdProb && sampleProductionId.first==TVar::ZZGG){ cerr << "sampleProductionId==ZZGG is not a valid option (ME is not implemented). Use decay MEs instead for ZZGG or specify another production." << endl; if (!hasInvalidOption) hasInvalidOption=true; }
+#endif
 
   if (!redefinedOutputFile) cout << "WARNING: No output file specified. Defaulting to " << coutput << "." << endl;
   if (!hasDecayAngles && fileLevel<0 && recoSelBehaviour==0) { cout << "Disabling the re-calculation of decay angles in ReadMode by default since no relevant option is specified." << endl; computeDecayAngles=0; }
@@ -174,6 +178,7 @@ void OptionParser::extractSkippedEvents(string rawoption){
   }
 }
 
+#ifdef CMSMELA
 void OptionParser::configureMela(){
   Int_t needMela = includeGenDecayProb.size()+includeRecoDecayProb.size()+includeGenProdProb.size()+includeRecoProdProb.size();
   if (needMela>0){
@@ -242,6 +247,7 @@ Bool_t OptionParser::hasGenProdME(string str){ // This one is a little bit trick
   }
   return (checkListVariable(includeGenProdProb, str) && processGenInfo());
 }
+#endif
 
 void OptionParser::interpretOption(string wish, string value){
   if (wish.empty()){
