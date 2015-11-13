@@ -7,15 +7,33 @@
 #include <cmath>
 #include <utility>
 #include <algorithm>
-#include <ZZMatrixElement/MELA/interface/Mela.h>
-#include <ZZMatrixElement/MELA/src/computeAngles.h>
 #include "TLorentzRotation.h"
 #include "Event.h"
 
+#ifdef CMSMELA
+  #include <ZZMatrixElement/MELA/interface/Mela.h>
+  #include <ZZMatrixElement/MELA/src/computeAngles.h>
+#endif
+using namespace std;  //it's done in MELA but for if CMSMELA is not defined
+
+
 namespace melaHelpers{
+
+#ifdef CMSMELA
   extern Mela* melaHandle;
   extern Float_t genPOLEWidth;
   extern Float_t standardPOLEWidth;
+#else
+  namespace mela{
+    void computeJetMassless(TLorentzVector massiveJet, TLorentzVector& masslessJet){
+      double energy, p3sq, ratio;
+      energy = massiveJet.T();
+      p3sq = massiveJet.P();
+      ratio = (p3sq>0 ? (energy / p3sq) : 1);
+      masslessJet.SetPxPyPzE(massiveJet.Px()*ratio, massiveJet.Py()*ratio, massiveJet.Pz()*ratio, energy);
+    }
+  }
+#endif
 
   void setSamplePoleWidth(Float_t width_);
   void setStandardPoleWidth(Float_t width_);
