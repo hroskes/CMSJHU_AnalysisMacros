@@ -33,7 +33,7 @@ void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, dou
 
   RooRealVar* mzz = new RooRealVar("GenHMass", "M_{ZZ} (GeV)", 125, 100, 1000);
   RooRealVar* z1mass = new RooRealVar("GenZ1Mass", "m_{Z1} (GeV)", 4, 120);
-  RooRealVar* z2mass = new RooRealVar("Z2Mass", "m_{Z2} (GeV)", 4, 120);
+  RooRealVar* z2mass = new RooRealVar("GenZ2Mass", "m_{Z2} (GeV)", 4, 120);
   RooRealVar* hs = new RooRealVar("Gencosthetastar", "cos#theta^{*}_{ZZ4l}", -1, 1);
   RooRealVar* h1 = new RooRealVar("GenhelcosthetaZ1", "cos(#theta_{1})_{ZZ4l}", -1, 1);
   RooRealVar* h2 = new RooRealVar("GenhelcosthetaZ2", "cos(#theta_{Z2})_{ZZ4l}", -1, 1);
