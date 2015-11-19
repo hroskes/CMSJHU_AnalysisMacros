@@ -17,7 +17,7 @@ const TString variables[nvariables] = {"Gencosthetastar_VBF", "GenhelcosthetaV1_
                                        "leadingpT", "subleadingpT", "leadingeta", "subleadingeta", "leadingphi", "subleadingphi"};
 const int ntreevariables = nvariables-6;
 
-const int nfiles = 3;
+const int nfiles = 2;
 vector<TString> files[nfiles];
 TString names[nfiles];
 bool filesfilled = false;
@@ -31,7 +31,7 @@ double maxes[nvariables] = {1, 1, 1, pi, pi,
                             1000, 1000, 2000, 12, 1,
                             250, 250, 6, 6, pi, pi};
 
-bool withptcut = true;
+bool withptcut = false;
 
 void VBFplots()
 {
@@ -71,9 +71,9 @@ void VBFplots()
         for (int i = 0; i < ntreevariables; i++)
             t->SetBranchAddress(variables[i], &(x[i]));
 
-        vector<double>  *pt;
-        vector<double> *eta;
-        vector<double> *phi;
+        vector<double>  *pt = 0;
+        vector<double> *eta = 0;
+        vector<double> *phi = 0;
         t->SetBranchAddress("GenAssociatedParticlePt", &pt);
         t->SetBranchAddress("GenAssociatedParticleEta", &eta);
         t->SetBranchAddress("GenAssociatedParticlePhi", &phi);
