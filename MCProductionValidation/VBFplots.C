@@ -128,10 +128,10 @@ void setupfiles()
 {
     if (filesfilled) return;
 
-    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/SM_decayed.lhe");
+    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/SM.root");
     names[0] = "SM";
 
-    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/PS_decayed.lhe");
+    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/PS.root");
     names[1] = "PS";
 
     filesfilled = true;
