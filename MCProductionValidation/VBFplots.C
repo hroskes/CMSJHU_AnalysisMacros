@@ -128,16 +128,16 @@ void setupfiles()
     if (filesfilled) return;
 
     files[0].push_back("$CIRCLE_ARTIFACTS/VBF/SM.root");
-    names[0] = "SM";
+    names[0] = "VBF SM";
 
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/PS.root");
-    names[1] = "PS";
+    names[1] = "VBF PS";
 
     files[2].push_back("$CIRCLE_ARTIFACTS/HJJ/SM.root");
-    names[2] = "SM";
+    names[2] = "HJJ SM";
 
     files[3].push_back("$CIRCLE_ARTIFACTS/HJJ/PS.root");
-    names[3] = "PS";
+    names[3] = "HJJ PS";
 
     filesfilled = true;
 };
