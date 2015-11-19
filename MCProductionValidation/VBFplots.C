@@ -17,7 +17,7 @@ const TString variables[nvariables] = {"Gencosthetastar_VBF", "GenhelcosthetaV1_
                                        "leadingpT", "subleadingpT", "leadingeta", "subleadingeta", "leadingphi", "subleadingphi"};
 const int ntreevariables = nvariables-6;
 
-const int nfiles = 2;
+const int nfiles = 4;
 vector<TString> files[nfiles];
 TString names[nfiles];
 bool filesfilled = false;
@@ -132,6 +132,12 @@ void setupfiles()
 
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/PS.root");
     names[1] = "PS";
+
+    files[2].push_back("$CIRCLE_ARTIFACTS/HJJ/SM.root");
+    names[2] = "SM";
+
+    files[3].push_back("$CIRCLE_ARTIFACTS/HJJ/PS.root");
+    names[3] = "PS";
 
     filesfilled = true;
 };
