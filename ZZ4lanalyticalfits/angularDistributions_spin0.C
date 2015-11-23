@@ -74,7 +74,7 @@ void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, dou
 
     plot->SetTitle(ctitle);
 
-    dataSM->plotOn(plot, MarkerColor(kRed), MarkerStyle(1), MarkerSize(1.2), LineWidth(0), XErrorSize(0), DataError(RooAbsData::Poisson));
+    dataSM->plotOn(plot, MarkerColor(kRed), MarkerStyle(1), MarkerSize(1.2), LineWidth(1), XErrorSize(1), DataError(RooAbsData::Poisson));
     someHiggs->PDF->plotOn(plot, LineColor(kRed), LineWidth(2));
 
     TGaxis::SetMaxDigits(3);
