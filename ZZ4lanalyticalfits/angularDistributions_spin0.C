@@ -28,7 +28,9 @@ using namespace RooFit;
 
 using namespace std;
 
-void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, double g1, double Re_g4, double Im_g4, int nbins=80){
+const int nbins[7] = {80, 80, 16, 16, 16, 16, 16};
+
+void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, double g1, double Re_g4, double Im_g4){
   gSystem->mkdir(plotdir);
 
   RooRealVar* mzz = new RooRealVar("GenHMass", "M_{ZZ} (GeV)", 125, 100, 1000);
@@ -59,7 +61,7 @@ void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, dou
   for (int plotIndex=0; plotIndex<7; plotIndex++){
     cout << plotIndex << endl;
 
-    RooPlot* plot = measurables[plotIndex]->frame(nbins);
+    RooPlot* plot = measurables[plotIndex]->frame(nbins[plotIndex]);
     plot->GetXaxis()->CenterTitle();
     plot->GetYaxis()->SetTitleOffset(1.2);
     plot->GetYaxis()->CenterTitle();
@@ -107,6 +109,6 @@ void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, dou
   delete tree;
 }
 
-void angularDistributions_spin0(TString file, TString plotdir, double g1, double Re_g4, double Im_g4, int nbins=80){
-    angularDistributions_spin0(1, &file, plotdir, g1, Re_g4, Im_g4, nbins);
+void angularDistributions_spin0(TString file, TString plotdir, double g1, double Re_g4, double Im_g4){
+    angularDistributions_spin0(1, &file, plotdir, g1, Re_g4, Im_g4);
 }
