@@ -28,14 +28,14 @@ using namespace RooFit;
 
 using namespace std;
 
-const int nbins[7] = {80, 80, 16, 16, 16, 16, 16};
+const int nbins[7] = {40, 40, 16, 16, 16, 16, 16};
 
 void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, double g1, double Re_g4, double Im_g4){
   gSystem->mkdir(plotdir);
 
   RooRealVar* mzz = new RooRealVar("GenHMass", "M_{ZZ} (GeV)", 125, 100, 1000);
-  RooRealVar* z1mass = new RooRealVar("GenZ1Mass", "m_{Z1} (GeV)", 4, 120);
-  RooRealVar* z2mass = new RooRealVar("GenZ2Mass", "m_{Z2} (GeV)", 4, 120);
+  RooRealVar* z1mass = new RooRealVar("GenZ1Mass", "m_{Z1} (GeV)", 0, 120);
+  RooRealVar* z2mass = new RooRealVar("GenZ2Mass", "m_{Z2} (GeV)", 0, 75);
   RooRealVar* hs = new RooRealVar("Gencosthetastar", "cos#theta^{*}_{ZZ4l}", -1, 1);
   RooRealVar* h1 = new RooRealVar("GenhelcosthetaZ1", "cos(#theta_{1})_{ZZ4l}", -1, 1);
   RooRealVar* h2 = new RooRealVar("GenhelcosthetaZ2", "cos(#theta_{Z2})_{ZZ4l}", -1, 1);
