@@ -43,7 +43,7 @@ public:
 
   ScalarPdfFactory_withFepspr(){};
     
-  ScalarPdfFactory_withFepspr(RooRealVar* m1,RooRealVar* m2,RooRealVar* hs,RooRealVar* h1,RooRealVar* h2,RooRealVar* Phi,RooRealVar* Phi1,RooRealVar* mZZ, int para, bool acceptance, bool pmf_applied=false, double myPOLE=125.6) {
+  ScalarPdfFactory_withFepspr(RooRealVar* m1,RooRealVar* m2,RooRealVar* hs,RooRealVar* h1,RooRealVar* h2,RooRealVar* Phi,RooRealVar* Phi1,RooRealVar* mZZ, int para, bool acceptance, bool pmf_applied=false, double myPOLE=125) {
 
     _measurables.m1   = m1;
     _measurables.m2   = m2;
