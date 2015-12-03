@@ -109,6 +109,6 @@ void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, dou
   delete tree;
 }
 
-void angularDistributions_spin0(TString file, TString plotdir, double g1, double Re_g4, double Im_g4){
-    angularDistributions_spin0(1, &file, plotdir, g1, Re_g4, Im_g4);
+void angularDistributions_spin0(TString file, TString plotdir, double g1, double Re_g2, double Im_g2, double Re_g4, double Im_g4){
+    angularDistributions_spin0(1, &file, plotdir, g1, Re_g2, Im_g2, Re_g4, Im_g4);
 }
