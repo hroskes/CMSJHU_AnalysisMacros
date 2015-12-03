@@ -17,7 +17,7 @@ const TString variables[nvariables] = {"Gencosthetastar_VBF", "GenhelcosthetaV1_
                                        "leadingpT", "subleadingpT", "leadingeta", "subleadingeta", "leadingphi", "subleadingphi"};
 const int ntreevariables = nvariables-6;
 
-const int nfiles = 4;
+const int nfiles = 5;
 vector<TString> files[nfiles];
 TString names[nfiles];
 bool filesfilled = false;
@@ -48,14 +48,11 @@ void VBFplots()
         {
             hh[i][j] = new TH1F(TString(files[j][0]).ReplaceAll("/","") += variables[i], "h", 100, mins[i], maxes[i]);
             hh[i][j]->SetLineColor(j+1);
-            h[i]->Add(hh[i][j]);
         }
     }
 
     TLegend *leg = new TLegend(0.6, 0.7, 0.9, 0.9);
     leg->SetFillStyle(0);
-    for (int j = 0; j < nfiles; j++)
-        leg->AddEntry(hh[0][j], names[j], "l");
 
     for (int j = 0; j < nfiles; j++)
     {
@@ -79,6 +76,7 @@ void VBFplots()
         t->SetBranchAddress("GenAssociatedParticlePhi", &phi);
 
         long length = t->GetEntries();
+        if (length == 0) continue;
         for (int l = 0; l < length; l++)
         {
             t->GetEntry(l);
@@ -104,7 +102,12 @@ void VBFplots()
                 cout << l+1 << " / " << length << endl;
         }
         for (int i = 0; i < nvariables; i++)
+        {
             hh[i][j]->Scale(1.0/hh[i][j]->Integral());
+            h[i]->Add(hh[i][j]);
+        }
+
+        leg->AddEntry(hh[0][j], names[j], "l");
     }
 
     TCanvas *c1 = new TCanvas();
@@ -133,11 +136,14 @@ void setupfiles()
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/PS.root");
     names[1] = "VBF PS";
 
-    files[2].push_back("$CIRCLE_ARTIFACTS/HJJ/SM.root");
-    names[2] = "HJJ SM";
+    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/a2.root");
+    names[2] = "VBF a2";
 
-    files[3].push_back("$CIRCLE_ARTIFACTS/HJJ/PS.root");
-    names[3] = "HJJ PS";
+    files[3].push_back("$CIRCLE_ARTIFACTS/HJJ/SM.root");
+    names[3] = "HJJ SM";
+
+    files[4].push_back("$CIRCLE_ARTIFACTS/HJJ/PS.root");
+    names[4] = "HJJ PS";
 
     filesfilled = true;
 };
