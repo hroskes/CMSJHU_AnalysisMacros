@@ -25,10 +25,10 @@ void setupfiles();
 
 
 double mins[nvariables] = {-1, -1, -1, -pi, -pi,
-                           0, 0, 0, 0, -1,
+                           0, 0, 0, 0,
                            0, 0, -6, -6, -pi, -pi};
 double maxes[nvariables] = {1, 1, 1, pi, pi,
-                            1000, 1000, 2000, 12, 1,
+                            1000, 1000, 2000, 12,
                             250, 250, 6, 6, pi, pi};
 
 bool withptcut = false;
