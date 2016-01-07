@@ -11,9 +11,9 @@
 using namespace std;
 
 double pi = TMath::Pi();
-const int nvariables = 16;
+const int nvariables = 15;
 const TString variables[nvariables] = {"Gencosthetastar_VBF", "GenhelcosthetaV1_VBF", "GenhelcosthetaV2_VBF", "Genhelphi_VBF", "GenphistarV1_VBF",
-                                       "GenQ_V1", "GenQ_V2", "GenDijetMass", "GenDRjet", "GenhelcosthetaZ1",
+                                       "GenQ_V1", "GenQ_V2", "GenDijetMass", "GenDRjet",
                                        "leadingpT", "subleadingpT", "leadingeta", "subleadingeta", "leadingphi", "subleadingphi"};
 const int ntreevariables = nvariables-6;
 
@@ -87,12 +87,12 @@ void VBFplots()
 
             if (pt->at(0) <= pt->at(1))
                 cout << "bad pt " << l << " " << pt->at(0) << " " << pt->at(1) << endl;
-            x[10] = pt->at(0);
-            x[11] = pt->at(1);
-            x[12] = eta->at(0);
-            x[13] = eta->at(1);
-            x[14] = phi->at(0);
-            x[15] = phi->at(1);
+            x[9] = pt->at(0);
+            x[10] = pt->at(1);
+            x[11] = eta->at(0);
+            x[12] = eta->at(1);
+            x[13] = phi->at(0);
+            x[14] = phi->at(1);
 
             if (passptcut || !withptcut)
                 for (int i = 0; i < nvariables; i++)
