@@ -1,8 +1,8 @@
 *.o
 *.so
 *.d
+*.pcm
 *.lhe
 *.log
 log*.txt
 analyzer
-

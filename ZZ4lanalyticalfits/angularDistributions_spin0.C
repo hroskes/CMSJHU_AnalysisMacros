@@ -31,7 +31,7 @@ using namespace std;
 const int nbins[7] = {40, 40, 16, 16, 16, 16, 16};
 
 void angularDistributions_spin0(int nfiles, TString *files, TString plotdir, double g1, double Re_g2, double Im_g2, double Re_g4, double Im_g4){
-  gSystem->mkdir(plotdir);
+  gSystem->mkdir(plotdir, true);
 
   RooRealVar* mzz = new RooRealVar("GenHMass", "M_{ZZ} (GeV)", 125, 100, 1000);
   RooRealVar* z1mass = new RooRealVar("GenZ1Mass", "m_{Z1} (GeV)", 0, 120);
