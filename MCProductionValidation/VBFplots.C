@@ -15,7 +15,7 @@ const int nvariables = 5;
 const TString variables[nvariables] = {"Gencosthetastar", "GenhelcosthetaZ1", "GenhelcosthetaZ2", "Genhelphi", "GenphistarZ1"};
 const int ntreevariables = nvariables;
 
-const int nfiles = 2;
+const int nfiles = 3;
 vector<TString> files[nfiles];
 TString names[nfiles];
 bool filesfilled = false;
@@ -129,6 +129,9 @@ void setupfiles()
 
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/SM_700to1000.root");
     names[1] = "m=700, pretend m=1000";
+
+    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/SM_700to700.root");
+    names[2] = "m=700, keep m=700";
 
     filesfilled = true;
 };
