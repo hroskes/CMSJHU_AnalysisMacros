@@ -13,7 +13,7 @@ using namespace std;
 double pi = TMath::Pi();
 const int nvariables = 5;
 const TString variables[nvariables] = {"Gencosthetastar", "GenhelcosthetaZ1", "GenhelcosthetaZ2", "Genhelphi", "GenphistarZ1"};
-const int ntreevariables = nvariables-6;
+const int ntreevariables = nvariables;
 
 const int nfiles = 2;
 vector<TString> files[nfiles];
@@ -78,7 +78,7 @@ void VBFplots()
             for (unsigned int i = 0; i < pt->size(); i++)
                 if (pt->at(i) < 15)
                     passptcut = false;
-
+/*
             if (pt->at(0) <= pt->at(1))
                 cout << "bad pt " << l << " " << pt->at(0) << " " << pt->at(1) << endl;
             x[9] = pt->at(0);
@@ -87,7 +87,7 @@ void VBFplots()
             x[12] = eta->at(1);
             x[13] = phi->at(0);
             x[14] = phi->at(1);
-
+*/
             if (passptcut || !withptcut)
                 for (int i = 0; i < nvariables; i++)
                     hh[i][j]->Fill(x[i]);
