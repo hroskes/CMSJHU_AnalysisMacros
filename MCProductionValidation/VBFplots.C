@@ -11,25 +11,19 @@
 using namespace std;
 
 double pi = TMath::Pi();
-const int nvariables = 15;
-const TString variables[nvariables] = {"Gencosthetastar_VBF", "GenhelcosthetaV1_VBF", "GenhelcosthetaV2_VBF", "Genhelphi_VBF", "GenphistarV1_VBF",
-                                       "GenQ_V1", "GenQ_V2", "GenDijetMass", "GenDRjet",
-                                       "leadingpT", "subleadingpT", "leadingeta", "subleadingeta", "leadingphi", "subleadingphi"};
+const int nvariables = 5;
+const TString variables[nvariables] = {"Gencosthetastar", "GenhelcosthetaZ1", "GenhelcosthetaZ2", "Genhelphi", "GenphistarZ1"};
 const int ntreevariables = nvariables-6;
 
-const int nfiles = 4;
+const int nfiles = 2;
 vector<TString> files[nfiles];
 TString names[nfiles];
 bool filesfilled = false;
 void setupfiles();
 
 
-double mins[nvariables] = {-1, -1, -1, -pi, -pi,
-                           0, 0, 0, 0,
-                           0, 0, -6, -6, -pi, -pi};
-double maxes[nvariables] = {1, 1, 1, pi, pi,
-                            1000, 1000, 2000, 12,
-                            250, 250, 6, 6, pi, pi};
+double mins[nvariables] = {-1, -1, -1, -pi, -pi};
+double maxes[nvariables] = {1, 1, 1, pi, pi};
 
 bool withptcut = false;
 
@@ -130,17 +124,11 @@ void setupfiles()
 {
     if (filesfilled) return;
 
-    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/SM.root");
-    names[0] = "VBF SM";
+    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/SM_700to400.root");
+    names[0] = "m=700, pretend m=400";
 
-    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/PS.root");
-    names[1] = "VBF PS";
-
-    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/a2.root");
-    names[2] = "VBF a2";
-
-    files[3].push_back("$CIRCLE_ARTIFACTS/HJJ/SM.root");
-    names[3] = "HJJ SM";
+    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/SM_700to1000.root");
+    names[1] = "m=700, pretend m=1000";
 
     filesfilled = true;
 };
