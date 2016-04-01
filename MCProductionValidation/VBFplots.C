@@ -29,7 +29,7 @@ bool withptcut = false;
 
 void VBFplots()
 {
-    TString dir = "$CIRCLE_ARTIFACTS/";
+    TString dir = "$CIRCLE_ARTIFACTS/VBF/";
     if (withptcut) dir += "/withptcut";
 
     setupfiles();
@@ -65,11 +65,9 @@ void VBFplots()
         vector<double>  *pt = 0;
         vector<double> *eta = 0;
         vector<double> *phi = 0;
-        float GenHMass;
         t->SetBranchAddress("GenAssociatedParticlePt", &pt);
         t->SetBranchAddress("GenAssociatedParticleEta", &eta);
         t->SetBranchAddress("GenAssociatedParticlePhi", &phi);
-        t->SetBranchAddress("GenHMass", &GenHMass);
 
         long length = t->GetEntries();
         if (length == 0) continue;
@@ -90,7 +88,7 @@ void VBFplots()
             x[13] = phi->at(0);
             x[14] = phi->at(1);
 */
-            if ((passptcut || !withptcut) && GenHMass > 650 && GenHMass < 750)
+            if (passptcut || !withptcut)
                 for (int i = 0; i < nvariables; i++)
                     hh[i][j]->Fill(x[i]);
 
@@ -126,14 +124,14 @@ void setupfiles()
 {
     if (filesfilled) return;
 
-    files[0].push_back("$CIRCLE_ARTIFACTS/SM_700to400.root");
-    names[0] = "m=400";
+    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/SM_700to400.root");
+    names[0] = "m=700, pretend m=400";
 
-    files[1].push_back("$CIRCLE_ARTIFACTS/SM_700to1000.root");
-    names[1] = "m=700";
+    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/SM_700to1000.root");
+    names[1] = "m=700, pretend m=1000";
 
-    files[2].push_back("$CIRCLE_ARTIFACTS/SM_700to700.root");
-    names[2] = "m=1000";
+    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/SM_700to700.root");
+    names[2] = "m=700, keep m=700";
 
     filesfilled = true;
 };
