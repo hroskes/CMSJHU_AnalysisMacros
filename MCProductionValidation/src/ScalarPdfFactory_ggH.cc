@@ -1,15 +1,20 @@
+#ifdef _def_melatools_
+#include <ZZMatrixElement/MELA/interface/ScalarPdfFactory_ggH.h>
+#else
 #include "../include/ScalarPdfFactory_ggH.h"
+#endif
 
-ScalarPdfFactory_ggH::ScalarPdfFactory_ggH(RooSpinZero::modelMeasurables measurables_, bool acceptance_, int V1decay_, int V2decay_) :
-ScalarPdfFactory(measurables_, acceptance_, V1decay_, V2decay_)
+
+ScalarPdfFactory_ggH::ScalarPdfFactory_ggH(RooSpinZero::modelMeasurables measurables_, bool acceptance_, RooSpin::VdecayType V1decay_, RooSpin::VdecayType V2decay_, Bool_t OnshellH_) :
+ScalarPdfFactory(measurables_, acceptance_, V1decay_, V2decay_, OnshellH_)
 {
   measurables.Y=0;
   initAcceptanceParams();
   makeParamsConst(true);
   initPDF();
 }
-ScalarPdfFactory_ggH::ScalarPdfFactory_ggH(RooSpinZero::modelMeasurables measurables_, double gRatio_[4][8], bool pmf_applied_, bool acceptance_, int V1decay_, int V2decay_) :
-ScalarPdfFactory(measurables_, gRatio_, pmf_applied_, acceptance_, V1decay_, V2decay_)
+ScalarPdfFactory_ggH::ScalarPdfFactory_ggH(RooSpinZero::modelMeasurables measurables_, double gRatio_[4][8], double gZGsRatio_[4][1], double gGsGsRatio_[3][1], bool pmf_applied_, bool acceptance_, RooSpin::VdecayType V1decay_, RooSpin::VdecayType V2decay_, Bool_t OnshellH_) :
+ScalarPdfFactory(measurables_, gRatio_, gZGsRatio_, gGsGsRatio_, pmf_applied_, acceptance_, V1decay_, V2decay_, OnshellH_)
 {
   measurables.Y=0;
   initAcceptanceParams();
@@ -143,19 +148,22 @@ void ScalarPdfFactory_ggH::destroyAcceptanceParams(){
 }
 
 void ScalarPdfFactory_ggH::makeParamsConst(bool yesNo){
-  parameters.Lambda->setConstant(true);
-  parameters.Lambda_z1->setConstant(true);
-  parameters.Lambda_z2->setConstant(true);
-  parameters.Lambda_z3->setConstant(true);
-  parameters.Lambda_z4->setConstant(true);
-  parameters.Lambda_Q->setConstant(true);
+  couplings.Lambda->setConstant(true);
+  couplings.Lambda_zgs1->setConstant(true);
+  couplings.Lambda_z1->setConstant(true);
+  couplings.Lambda_z2->setConstant(true);
+  couplings.Lambda_z3->setConstant(true);
+  couplings.Lambda_z4->setConstant(true);
+  couplings.Lambda_Q->setConstant(true);
 
-  parameters.mX->setConstant(yesNo);
-  parameters.gamX->setConstant(yesNo);
-  parameters.mV->setConstant(yesNo);
-  parameters.gamV->setConstant(yesNo);
-  parameters.R1Val->setConstant(yesNo);
-  parameters.R2Val->setConstant(yesNo);
+  ((RooRealVar*)parameters.mX)->setConstant(yesNo);
+  ((RooRealVar*)parameters.gamX)->setConstant(yesNo);
+  ((RooRealVar*)parameters.mW)->setConstant(yesNo);
+  ((RooRealVar*)parameters.gamW)->setConstant(yesNo);
+  ((RooRealVar*)parameters.mZ)->setConstant(yesNo);
+  ((RooRealVar*)parameters.gamZ)->setConstant(yesNo);
+  ((RooRealVar*)parameters.Sin2ThetaW)->setConstant(yesNo);
+  ((RooRealVar*)parameters.vev)->setConstant(yesNo);
 
   if (acceptance && !yesNo){
     accepParams.aPhi->setConstant(kFALSE);
@@ -246,8 +254,11 @@ void ScalarPdfFactory_ggH::initPDF(){
     "PDF", "PDF",
     measurables,
     parameters,
-    accepParams
+    couplings,
+    accepParams,
+    V1decay,V2decay
     );
+  PDF_base = (RooSpin*)PDF;
 }
 
 
