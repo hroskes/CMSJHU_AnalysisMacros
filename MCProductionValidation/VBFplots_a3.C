@@ -35,7 +35,7 @@ bool withptcut = false;
 
 void VBFplots()
 {
-    TString dir = "$CIRCLE_ARTIFACTS/VBF/ZZ";
+    TString dir = "$CIRCLE_ARTIFACTS/VBF/a3";
     if (withptcut) dir += "/withptcut";
 
     setupfiles();
@@ -130,17 +130,14 @@ void setupfiles()
 {
     if (filesfilled) return;
 
-    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/SM.root");
-    names[0] = "VBF SM";
+    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/a3.root");
+    names[0] = "VBF ZZ a_{3}";
 
-    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/PS.root");
-    names[1] = "VBF a_{3}";
+    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_a3.root");
+    names[1] = "VBF Z#gamma^{*} a_{3}";
 
-    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/a2.root");
-    names[2] = "VBF a_{2}";
-
-    files[3].push_back("$CIRCLE_ARTIFACTS/VBF/L1.root");
-    names[3] = "VBF #Lambda_{1}";
+    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/gsgs_a3.root");
+    names[2] = "VBF #gamma^{*}#gamma^{*} a_{3}";
 
     filesfilled = true;
 };
