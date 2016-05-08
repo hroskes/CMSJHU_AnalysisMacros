@@ -131,16 +131,16 @@ void setupfiles()
     if (filesfilled) return;
 
     files[0].push_back("$CIRCLE_ARTIFACTS/VBF/ZZ_L1.root");
-    names[0] = "ZZ#rightarrowH#Lambda_{1}";
+    names[0] = "ZZ#rightarrowH #Lambda_{1}";
 
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/WW_L1.root");
-    names[1] = "WW#rightarrowH#Lambda_{1}";
+    names[1] = "WW#rightarrowH #Lambda_{1}";
 
     files[2].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_L1.root");
-    names[2] = "Z#gamma^{*}#rightarrowH#Lambda_{1}";
+    names[2] = "Z#gamma^{*}#rightarrowH #Lambda_{1}";
 
     files[3].push_back("$CIRCLE_ARTIFACTS/VBF/gsgs_L1.root");
-    names[3] = "#gamma^{*}#gamma^{*}#rightarrowH#Lambda_{1}";
+    names[3] = "#gamma^{*}#gamma^{*}#rightarrowH #Lambda_{1}";
 
     filesfilled = true;
 };

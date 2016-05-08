@@ -131,16 +131,16 @@ void setupfiles()
     if (filesfilled) return;
 
     files[0].push_back("$CIRCLE_ARTIFACTS/VBF/WW_SM.root");
-    names[0] = "WW#rightarrowHSM";
+    names[0] = "WW#rightarrowH SM";
 
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/WW_PS.root");
-    names[1] = "WW#rightarrowHa_{3}";
+    names[1] = "WW#rightarrowH a_{3}";
 
     files[2].push_back("$CIRCLE_ARTIFACTS/VBF/WW_a2.root");
-    names[2] = "WW#rightarrowHa_{2}";
+    names[2] = "WW#rightarrowH a_{2}";
 
     files[3].push_back("$CIRCLE_ARTIFACTS/VBF/WW_L1.root");
-    names[3] = "WW#rightarrowH#Lambda_{1}";
+    names[3] = "WW#rightarrowH #Lambda_{1}";
 
     filesfilled = true;
 };

@@ -33,9 +33,9 @@ double maxes[nvariables] = {1, 1, 1, pi, pi,
 
 bool withptcut = false;
 
-void VBFplots_Zgs()
+void VBFplots_a2()
 {
-    TString dir = "$CIRCLE_ARTIFACTS/VBF/Zgs";
+    TString dir = "$CIRCLE_ARTIFACTS/VBF/a2";
     if (withptcut) dir += "/withptcut";
 
     setupfiles();
@@ -130,14 +130,11 @@ void setupfiles()
 {
     if (filesfilled) return;
 
-    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_PS.root");
-    names[1] = "Z#gamma^{*}#rightarrowH a_{3}";
+    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/ZZ_SM.root");
+    names[0] = "ZZ#rightarrowH SM";
 
-    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_a2.root");
-    names[2] = "Z#gamma^{*}#rightarrowH a_{2}";
-
-    files[3].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_L1.root");
-    names[3] = "Z#gamma^{*}#rightarrowH #Lambda_{1}";
+    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/WW_SM.root");
+    names[1] = "WW#rightarrowH SM";
 
     filesfilled = true;
 };
