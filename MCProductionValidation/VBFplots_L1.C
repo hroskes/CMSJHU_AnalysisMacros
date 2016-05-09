@@ -46,7 +46,7 @@ void VBFplots_L1()
         h[i] = new THStack(variables[i], variables[i]);
         for (int j = 0; j < nfiles; j++)
         {
-            hh[i][j] = new TH1F(TString(files[j][0]).ReplaceAll("/","") += variables[i], "h", 100, mins[i], maxes[i]);
+            hh[i][j] = new TH1F(TString(names[j]).ReplaceAll("/","") += variables[i], "h", 100, mins[i], maxes[i]);
             hh[i][j]->SetLineColor(j+1);
         }
     }

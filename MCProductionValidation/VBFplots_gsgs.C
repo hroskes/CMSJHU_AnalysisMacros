@@ -46,7 +46,7 @@ void VBFplots_gsgs()
         h[i] = new THStack(variables[i], variables[i]);
         for (int j = 0; j < nfiles; j++)
         {
-            hh[i][j] = new TH1F(TString(files[j][0]).ReplaceAll("/","") += variables[i], "h", 100, mins[i], maxes[i]);
+            hh[i][j] = new TH1F(TString(names[j]).ReplaceAll("/","") += variables[i], "h", 100, mins[i], maxes[i]);
             hh[i][j]->SetLineColor(j+1);
         }
     }
@@ -129,6 +129,8 @@ void VBFplots_gsgs()
 void setupfiles()
 {
     if (filesfilled) return;
+
+    names[0] = "";
 
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/gsgs_PS.root");
     names[1] = "#gamma^{*}#gamma^{*}#rightarrowH a_{3}";
