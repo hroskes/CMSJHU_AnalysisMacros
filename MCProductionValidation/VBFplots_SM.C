@@ -33,9 +33,9 @@ double maxes[nvariables] = {1, 1, 1, pi, pi,
 
 bool withptcut = false;
 
-void VBFplots_a2()
+void VBFplots_SM()
 {
-    TString dir = "$CIRCLE_ARTIFACTS/VBF/a2";
+    TString dir = "$CIRCLE_ARTIFACTS/VBF/SM";
     if (withptcut) dir += "/withptcut";
 
     setupfiles();
