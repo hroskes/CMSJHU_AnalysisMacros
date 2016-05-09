@@ -130,16 +130,16 @@ void setupfiles()
 {
     if (filesfilled) return;
 
-    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/ZZ_a3.root");
+    files[0].push_back("$CIRCLE_ARTIFACTS/VBF/ZZ_PS.root");
     names[0] = "ZZ#rightarrowH a_{3}";
 
-    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/WW_a3.root");
+    files[1].push_back("$CIRCLE_ARTIFACTS/VBF/WW_PS.root");
     names[1] = "WW#rightarrowH a_{3}";
 
-    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_a3.root");
+    files[2].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_PS.root");
     names[2] = "Z#gamma*#rightarrowH a_{3}";
 
-    files[3].push_back("$CIRCLE_ARTIFACTS/VBF/gsgs_a3.root");
+    files[3].push_back("$CIRCLE_ARTIFACTS/VBF/gsgs_PS.root");
     names[3] = "#gamma*#gamma*#rightarrowH a_{3}";
 
     filesfilled = true;
