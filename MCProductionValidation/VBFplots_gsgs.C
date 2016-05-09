@@ -56,7 +56,6 @@ void VBFplots_gsgs()
 
     for (int j = 0; j < nfiles; j++)
     {
-        cout << i << " "<< j << endl;
         TChain *t = new TChain("SelectedTree", "SelectedTree");
         for (unsigned int k = 0; k < files[j].size(); k++)
         {
