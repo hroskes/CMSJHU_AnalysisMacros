@@ -137,10 +137,10 @@ void setupfiles()
     names[1] = "WW#rightarrowH #Lambda_{1}";
 
     files[2].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_L1.root");
-    names[2] = "Z#gamma^{*}#rightarrowH #Lambda_{1}";
+    names[2] = "Z#gamma*#rightarrowH #Lambda_{1}";
 
     files[3].push_back("$CIRCLE_ARTIFACTS/VBF/gsgs_L1.root");
-    names[3] = "#gamma^{*}#gamma^{*}#rightarrowH #Lambda_{1}";
+    names[3] = "#gamma*#gamma*#rightarrowH #Lambda_{1}";
 
     filesfilled = true;
 };

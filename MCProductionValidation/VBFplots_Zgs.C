@@ -130,16 +130,17 @@ void setupfiles()
 {
     if (filesfilled) return;
 
+    files[0].push_back("none");
     names[0] = "";
 
     files[1].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_PS.root");
-    names[1] = "Z#gamma^{*}#rightarrowH a_{3}";
+    names[1] = "Z#gamma*#rightarrowH a_{3}";
 
     files[2].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_a2.root");
-    names[2] = "Z#gamma^{*}#rightarrowH a_{2}";
+    names[2] = "Z#gamma*#rightarrowH a_{2}";
 
     files[3].push_back("$CIRCLE_ARTIFACTS/VBF/Zgs_L1.root");
-    names[3] = "Z#gamma^{*}#rightarrowH #Lambda_{1}";
+    names[3] = "Z#gamma*#rightarrowH #Lambda_{1}";
 
     filesfilled = true;
 };
