@@ -4,6 +4,18 @@ namespace PDGHelpers{
    double HVVmass = Zmass;
 }
 
+bool PDGHelpers::isAJet(const int id){
+  if (PDGHelpers::isAnUnknownJet(id) || PDGHelpers::isAQuark(id) || PDGHelpers::isAGluon(id)) return true;
+  else return false;
+}
+bool PDGHelpers::isAnUnknownJet(const int id){
+  if (id==0) return true;
+  else return false;
+}
+bool PDGHelpers::isInvalid(const int id){
+  if (id==-9000) return true;
+  else return false;
+}
 bool PDGHelpers::isAQuark(int id){
   if (std::abs(id)<=6 && std::abs(id)>0) return true;
   else return false;
@@ -26,6 +38,10 @@ bool PDGHelpers::isANeutrino(int id){
 }
 bool PDGHelpers::isAGluon(int id){
   if (std::abs(id)==21) return true;
+  else return false;
+}
+bool PDGHelpers::isAPhoton(int id){
+  if (std::abs(id)==22) return true;
   else return false;
 }
 bool PDGHelpers::isAZBoson(int id){

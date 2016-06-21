@@ -53,7 +53,11 @@ $(OUTLIB)Particle.o: $(INCLUDEDIR)Particle.cc $(OUTLIB)PDGHelpers.o
 	@mkdir -p $(OUTLIB)
 	$(CXX) $(CXXFLAGS) -c -o $(OUTLIB)Particle.o $(GLIBS) $<
 
-$(OUTLIB)ZZCandidate.o: $(INCLUDEDIR)ZZCandidate.cc $(OUTLIB)Particle.o
+$(OUTLIB)TopCandidate.o: $(INCLUDEDIR)TopCandidate.cc $(OUTLIB)Particle.o
+	@mkdir -p $(OUTLIB)
+	$(CXX) $(CXXFLAGS) -c -o $(OUTLIB)TopCandidate.o $(GLIBS) $<
+
+$(OUTLIB)ZZCandidate.o: $(INCLUDEDIR)ZZCandidate.cc $(OUTLIB)TopCandidate.o
 	@mkdir -p $(OUTLIB)
 	$(CXX) $(CXXFLAGS) -c -o $(OUTLIB)ZZCandidate.o $(GLIBS) $<
 
@@ -110,6 +114,8 @@ $(OUTLIB)main.o: $(INCLUDEDIR)main.cc $(OUTLIB)Reader.o $(OUTLIB)convertPythia.o
 
 
 dolinks:
+	cp $(COMPILEPATH)macros/loadLib.py $(RUNDIR)loadLib.py
+	cp $(COMPILEPATH)macros/trimPythia.py $(RUNDIR)trimPythia.py
 	ln -sf $(COMPILEPATH)macros/loadLib.cc $(RUNDIR)loadLib.cc
 	ln -sf $(COMPILEPATH)macros/trimPythia.cc $(RUNDIR)trimPythia.cc
 
@@ -127,4 +133,10 @@ clean:
 	rm -f $(RUNDIR)br.sm*
 	rm -f $(RUNDIR)*.cc
 	rm -f $(RUNDIR)analyze*
-	rm -f $(COMPILEPATH)*.o
+	rm -f $(RUNDIR)*.o
+	rm -f $(RUNDIR)*.so
+	rm -f $(RUNDIR)*.d
+	rm -f $(RUNDIR)*.pcm
+	rm -f $(RUNDIR)*.py
+	rm -f $(RUNDIR)*.pyc
+	

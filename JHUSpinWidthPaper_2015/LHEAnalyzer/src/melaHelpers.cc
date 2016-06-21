@@ -481,7 +481,8 @@ void melaHelpers::computeAngles(
   float& costheta1,
   float& costheta2,
   float& Phi,
-  float& Phi1){
+  float& Phi1
+  ){
   /*
   cout << "dec begin" << endl;
   cout << "Entry:\n";
@@ -493,8 +494,8 @@ void melaHelpers::computeAngles(
 
 #ifdef CMSMELA
   if (mela::forbidMassiveLeptons){
-    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept1Id)==25 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21 || fabs(Z1_lept2Id)==25)) melaHelpers::constrainedRemoveLeptonMass(p4M11, p4M12);
-    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept1Id)==25 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21 || fabs(Z2_lept2Id)==25)) melaHelpers::constrainedRemoveLeptonMass(p4M21, p4M22);
+    if (!(fabs(Z1_lept1Id)==23 || fabs(Z1_lept1Id)==24 || fabs(Z1_lept1Id)==21 || fabs(Z1_lept1Id)==22 || fabs(Z1_lept1Id)==25 || fabs(Z1_lept2Id)==23 || fabs(Z1_lept2Id)==24 || fabs(Z1_lept2Id)==21 || fabs(Z1_lept2Id)==22 || fabs(Z1_lept2Id)==25)) melaHelpers::constrainedRemoveLeptonMass(p4M11, p4M12);
+    if (!(fabs(Z2_lept1Id)==23 || fabs(Z2_lept1Id)==24 || fabs(Z2_lept1Id)==21 || fabs(Z2_lept1Id)==22 || fabs(Z2_lept1Id)==25 || fabs(Z2_lept2Id)==23 || fabs(Z2_lept2Id)==24 || fabs(Z2_lept2Id)==21 || fabs(Z2_lept2Id)==22 || fabs(Z2_lept2Id)==25)) melaHelpers::constrainedRemoveLeptonMass(p4M21, p4M22);
   }
 #endif
   /*
@@ -510,18 +511,17 @@ void melaHelpers::computeAngles(
   TLorentzVector p4Z2 = p4M21 + p4M22;
 
   // Sort Z1 leptons so that:
-  if ((Z1_lept1Id*Z1_lept2Id<0 && Z1_lept1Id<0) || // for OS pairs: lep1 must be the negative one
-    (Z1_lept1Id*Z1_lept2Id>0 && p4M11.Phi()<=p4M12.Phi()) //for SS pairs: use random deterministic convention
-    ) {
-    swap(p4M11, p4M12);
-  }
-
+  if (
+    (Z1_lept1Id*Z1_lept2Id<0 && Z1_lept1Id<0) // for OS pairs: lep1 must be the negative one
+    ||
+    ((Z1_lept1Id*Z1_lept2Id>0 || (Z1_lept1Id==0 && Z1_lept2Id==0)) && p4M11.Phi()<=p4M12.Phi()) //for SS pairs: use random deterministic convention
+    ) swap(p4M11, p4M12);
   // Same for Z2 leptons
-  if ((Z2_lept1Id*Z2_lept2Id<0 && Z2_lept1Id<0) ||
-    (Z2_lept1Id*Z2_lept2Id>0 && p4M21.Phi()<=p4M22.Phi())
-    ) {
-    swap(p4M21, p4M22);
-  }
+  if (
+    (Z2_lept1Id*Z2_lept2Id<0 && Z2_lept1Id<0)
+    ||
+    ((Z2_lept1Id*Z2_lept2Id>0 || (Z2_lept1Id==0 && Z2_lept2Id==0)) && p4M21.Phi()<=p4M22.Phi())
+    ) swap(p4M21, p4M22);
 
   // BEGIN THE CALCULATION
 
@@ -540,43 +540,51 @@ void melaHelpers::computeAngles(
   TVector3 theZ2X_p3 = TVector3(thep4Z2inXFrame.X(), thep4Z2inXFrame.Y(), thep4Z2inXFrame.Z());
   costhetastar = theZ1X_p3.CosTheta();
 
+  TVector3 boostV1(0, 0, 0);
+  TVector3 boostV2(0, 0, 0);
   //// --------------------------- costheta1
-  TVector3 boostV1 = -(p4Z1.BoostVector());
-  if (boostV1.Mag()>=1.) {
-    cout << "Warning: Mela::computeAngles: Z1 boost with beta=1, scaling down" << endl;
-    boostV1*=0.9999/boostV1.Mag();
-  }
-  TLorentzVector p4M11_BV1(p4M11);
-  TLorentzVector p4M12_BV1(p4M12);
-  TLorentzVector p4M21_BV1(p4M21);
-  TLorentzVector p4M22_BV1(p4M22);
-  p4M11_BV1.Boost(boostV1);
-  p4M12_BV1.Boost(boostV1);
-  p4M21_BV1.Boost(boostV1);
-  p4M22_BV1.Boost(boostV1);
+  if (!(fabs(Z1_lept1Id)==21 || fabs(Z1_lept1Id)==22 || fabs(Z1_lept2Id)==21 || fabs(Z1_lept2Id)==22)){
+    boostV1 = -(p4Z1.BoostVector());
+    if (boostV1.Mag()>=1.) {
+      cout << "Warning: Mela::computeAngles: Z1 boost with beta=1, scaling down" << endl;
+      boostV1*=0.9999/boostV1.Mag();
+    }
+    TLorentzVector p4M11_BV1(p4M11);
+    TLorentzVector p4M12_BV1(p4M12);
+    TLorentzVector p4M21_BV1(p4M21);
+    TLorentzVector p4M22_BV1(p4M22);
+    p4M11_BV1.Boost(boostV1);
+    p4M12_BV1.Boost(boostV1);
+    p4M21_BV1.Boost(boostV1);
+    p4M22_BV1.Boost(boostV1);
 
-  TLorentzVector p4V2_BV1 = p4M21_BV1 + p4M22_BV1;
-  //// costheta1
-  costheta1 = -p4V2_BV1.Vect().Unit().Dot(p4M11_BV1.Vect().Unit());
+    TLorentzVector p4V2_BV1 = p4M21_BV1 + p4M22_BV1;
+    //// costheta1
+    costheta1 = -p4V2_BV1.Vect().Unit().Dot(p4M11_BV1.Vect().Unit());
+  }
+  else costheta1 = 0;
 
   //// --------------------------- costheta2
-  TVector3 boostV2 = -(p4Z2.BoostVector());
-  if (boostV2.Mag()>=1.) {
-    cout << "Warning: Mela::computeAngles: Z2 boost with beta=1, scaling down" << endl;
-    boostV2*=0.9999/boostV2.Mag();
-  }
-  TLorentzVector p4M11_BV2(p4M11);
-  TLorentzVector p4M12_BV2(p4M12);
-  TLorentzVector p4M21_BV2(p4M21);
-  TLorentzVector p4M22_BV2(p4M22);
-  p4M11_BV2.Boost(boostV2);
-  p4M12_BV2.Boost(boostV2);
-  p4M21_BV2.Boost(boostV2);
-  p4M22_BV2.Boost(boostV2);
+  if (!(fabs(Z2_lept1Id)==21 || fabs(Z2_lept1Id)==22 || fabs(Z2_lept2Id)==21 || fabs(Z2_lept2Id)==22)){
+    boostV2 = -(p4Z2.BoostVector());
+    if (boostV2.Mag()>=1.) {
+      cout << "Warning: Mela::computeAngles: Z2 boost with beta=1, scaling down" << endl;
+      boostV2*=0.9999/boostV2.Mag();
+    }
+    TLorentzVector p4M11_BV2(p4M11);
+    TLorentzVector p4M12_BV2(p4M12);
+    TLorentzVector p4M21_BV2(p4M21);
+    TLorentzVector p4M22_BV2(p4M22);
+    p4M11_BV2.Boost(boostV2);
+    p4M12_BV2.Boost(boostV2);
+    p4M21_BV2.Boost(boostV2);
+    p4M22_BV2.Boost(boostV2);
 
-  TLorentzVector p4V1_BV2 = p4M11_BV2 + p4M12_BV2;
-  //// costheta2
-  costheta2 = -p4V1_BV2.Vect().Unit().Dot(p4M21_BV2.Vect().Unit());
+    TLorentzVector p4V1_BV2 = p4M11_BV2 + p4M12_BV2;
+    //// costheta2
+    costheta2 = -p4V1_BV2.Vect().Unit().Dot(p4M21_BV2.Vect().Unit());
+  }
+  else costheta2 = 0;
 
   //// --------------------------- Phi and Phi1 (old phistar1 - azimuthal production angle)
   TLorentzVector p4M11_BX(p4M11);
@@ -600,18 +608,18 @@ void melaHelpers::computeAngles(
   //// Phi
   float tmpSgnPhi = p3V1_BX.Dot(normal1_BX.Cross(normal2_BX));
   float sgnPhi = 0;
-  if (fabs(tmpSgnPhi)>0) sgnPhi = tmpSgnPhi/fabs(tmpSgnPhi);
+  if (fabs(tmpSgnPhi)>0.) sgnPhi = tmpSgnPhi/fabs(tmpSgnPhi);
   float dot_BX12 = normal1_BX.Dot(normal2_BX);
-  if (fabs(dot_BX12)>=1) dot_BX12 *= 1./fabs(dot_BX12);
+  if (fabs(dot_BX12)>=1.) dot_BX12 *= 1./fabs(dot_BX12);
   Phi = sgnPhi * acos(-1.*dot_BX12);
 
 
   //// Phi1
   float tmpSgnPhi1 = p3V1_BX.Dot(normal1_BX.Cross(normalSC_BX));
   float sgnPhi1 = 0;
-  if (fabs(tmpSgnPhi1)>0) sgnPhi1 = tmpSgnPhi1/fabs(tmpSgnPhi1);
+  if (fabs(tmpSgnPhi1)>0.) sgnPhi1 = tmpSgnPhi1/fabs(tmpSgnPhi1);
   float dot_BX1SC = normal1_BX.Dot(normalSC_BX);
-  if (fabs(dot_BX1SC)>=1) dot_BX1SC *= 1./fabs(dot_BX1SC);
+  if (fabs(dot_BX1SC)>=1.) dot_BX1SC *= 1./fabs(dot_BX1SC);
   Phi1 = sgnPhi1 * acos(dot_BX1SC);
 
   if (isnan(costhetastar) || isnan(costheta1) || isnan(costheta2) || isnan(Phi) || isnan(Phi1)){
@@ -878,13 +886,8 @@ void melaHelpers::computeVHangles(
     costheta1,
     costheta2,
     Phi,
-    Phi1);
-  // Return from -p_Zs to p_Zs. Notice that inverting this computation will now give p11 as p(incoming qbar) ~ -p(outgoing q)
-  Phi = -Phi; // Because p1 -> -p1
-  Phi1 = (Phi1>0 ? TMath::Pi()-Phi1 : -TMath::Pi()-Phi1); // Because p1 -> -p1 implies nsc -> -nsc, p1 -> -p1
-  costheta1 = -costheta1; // Because for p1 -> -p1, p1i -> -p1i
-  costheta2 = -costheta2; // Because p1 -> -p1
-  costhetastar = -costhetastar; // Because p1 -> -p1
+    Phi1
+    );
 }
 
 

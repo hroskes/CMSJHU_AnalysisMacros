@@ -34,7 +34,7 @@ void convertLHE::run(){
 
   tree->bookAllBranches(false);
 
-  for (int f=0; f<filename.size(); f++){
+  for (unsigned int f=0; f<filename.size(); f++){
     string cinput = filename.at(f);
     cout << "Processing " << cinput << "..." << endl;
     ifstream fin;
@@ -42,8 +42,9 @@ void convertLHE::run(){
     if (fin.good()){
       int nProcessed = 0;
       int ev = 0;
+      int fileLine = 0; // Debugging
       while (!fin.eof()){
-        vector<Particle*> particleList = readEvent(fin, weight);
+        vector<Particle*> particleList = readEvent(fin, fileLine, weight);
         vector<Particle*> smearedParticleList; // Bookkeeping
         vector<ZZCandidate*> candList; // Bookkeeping
         vector<ZZCandidate*> smearedCandList; // Bookkeeping
@@ -51,7 +52,7 @@ void convertLHE::run(){
         if (globalNEvents>=maxProcEvents && maxProcEvents>=0) break;
         if (particleList.empty()) continue;
         bool doSkipEvent = false;
-        for (int es=0; es<eventSkipList.size(); es++){
+        for (unsigned int es=0; es<eventSkipList.size(); es++){
           if (
             (eventSkipList.at(es).first<=globalNEvents && eventSkipList.at(es).second>=globalNEvents)
             ||
@@ -69,7 +70,7 @@ void convertLHE::run(){
           vectorInt hasGenHiggs;
           Event smearedEvent;
           smearedEvent.setWeight(weight);
-          for (int p=0; p<particleList.size(); p++){
+          for (unsigned int p=0; p<particleList.size(); p++){
             Particle* genPart = particleList.at(p); // Has mother info from LHE reading
             if (isAHiggs(genPart->id)){
               hasGenHiggs.push_back(p);
@@ -78,6 +79,7 @@ void convertLHE::run(){
             if (genPart->genStatus==1){
               if (isALepton(genPart->id)) genEvent.addLepton(genPart);
               else if (isANeutrino(genPart->id)) genEvent.addNeutrino(genPart);
+              else if (isAPhoton(genPart->id)) genEvent.addPhoton(genPart);
               else if (isAGluon(genPart->id) || isAQuark(genPart->id)) genEvent.addJet(genPart);
 
               Particle* smearedPart; // Has no mother info
@@ -91,6 +93,7 @@ void convertLHE::run(){
               smearedParticleList.push_back(smearedPart);
               if (isALepton(smearedPart->id)) smearedEvent.addLepton(smearedPart);
               else if (isANeutrino(smearedPart->id)) smearedEvent.addNeutrino(smearedPart);
+              else if (isAPhoton(smearedPart->id)) smearedEvent.addPhoton(smearedPart);
               else if (isAGluon(smearedPart->id) || isAQuark(smearedPart->id)){
                 smearedPart->id=0; // Wipe id from reco. quark/gluon
                 smearedEvent.addJet(smearedPart);
@@ -100,15 +103,19 @@ void convertLHE::run(){
             else if (genPart->genStatus==-1) tree->fillMotherInfo(genPart);
           }
 
+          if (debugVars::debugFlag) cout << "Starting to construct gen. VV candidates." << endl;
           genEvent.constructVVCandidates(options->doGenHZZdecay(), options->genDecayProducts());
-          for (int p=0; p<particleList.size(); p++){
+          if (debugVars::debugFlag) cout << "Successfully constructed gen. VV candidates." << endl;
+          for (unsigned int p=0; p<particleList.size(); p++){
             Particle* genPart = particleList.at(p);
             if (genPart->genStatus==-1) genEvent.addVVCandidateMother(genPart);
           }
+          if (debugVars::debugFlag) cout << "Starting to add gen. VV candidate appendages." << endl;
           genEvent.addVVCandidateAppendages();
           ZZCandidate* genCand=0;
+          if (debugVars::debugFlag) cout << "Number of gen. Higgs candidates directly from the LHE: " << hasGenHiggs.size() << endl;
           if (hasGenHiggs.size()>0){
-            for (int gk=0; gk<hasGenHiggs.size(); gk++){
+            for (unsigned int gk=0; gk<hasGenHiggs.size(); gk++){
               ZZCandidate* tmpCand = HiggsComparators::matchAHiggsToParticle(genEvent, particleList.at(hasGenHiggs.at(gk)));
               if (tmpCand!=0){
                 if (genCand==0) genCand=tmpCand;
@@ -141,20 +148,20 @@ void convertLHE::run(){
         else cerr << "Weight=0 at event " << ev << endl;
         ev++;
 
-        for (int p=0; p<smearedCandList.size(); p++){ // Bookkeeping
+        for (unsigned int p=0; p<smearedCandList.size(); p++){ // Bookkeeping
           ZZCandidate* tmpCand = (ZZCandidate*)smearedCandList.at(p);
           if (tmpCand!=0) delete tmpCand;
         }
-        for (int p=0; p<smearedParticleList.size(); p++){ // Bookkeeping
+        for (unsigned int p=0; p<smearedParticleList.size(); p++){ // Bookkeeping
           Particle* tmpPart = (Particle*)smearedParticleList.at(p);
           if (tmpPart!=0) delete tmpPart;
         }
 
-        for (int p=0; p<candList.size(); p++){ // Bookkeeping
+        for (unsigned int p=0; p<candList.size(); p++){ // Bookkeeping
           ZZCandidate* tmpCand = (ZZCandidate*)candList.at(p);
           if (tmpCand!=0) delete tmpCand;
         }
-        for (int p=0; p<particleList.size(); p++){ // Bookkeeping
+        for (unsigned int p=0; p<particleList.size(); p++){ // Bookkeeping
           Particle* tmpPart = (Particle*)particleList.at(p);
           if (tmpPart!=0) delete tmpPart;
         }
@@ -166,6 +173,7 @@ void convertLHE::run(){
         particleList.clear();
 
         globalNEvents++;
+        if (globalNEvents % 100000 == 0) cout << "Event " << globalNEvents << "..." << endl;
       }
       fin.close();
       cout << "Processed number of events from the input file (recorded events / sample size observed / cumulative traversed): " << nProcessed << " / " << ev << " / " << globalNEvents << endl;
@@ -174,7 +182,7 @@ void convertLHE::run(){
   finalizeRun();
 }
 
-vector<Particle*> convertLHE::readEvent(ifstream& input_lhe, double& weight){
+vector<Particle*> convertLHE::readEvent(ifstream& input_lhe, int& fline, double& weight){
   string event_beginning = "<event>";
   string event_end = "</event>";
   string file_closing = "</LesHouchesEvents>";
@@ -190,7 +198,7 @@ vector<Particle*> convertLHE::readEvent(ifstream& input_lhe, double& weight){
       weight=0;
       return collection;
     }
-    getline(input_lhe, str_in);
+    getline(input_lhe, str_in); fline++;
     if (str_in.find(file_closing)!=string::npos){
       weight=0;
       return collection;
@@ -200,6 +208,7 @@ vector<Particle*> convertLHE::readEvent(ifstream& input_lhe, double& weight){
   int nparticle, para;
   double m_V, alpha_qed, alpha_s;
 
+  fline++;
   input_lhe >> nparticle >> para >> weight >> m_V >> alpha_qed >> alpha_s;
   for (int a = 0; a < nparticle; a++){
     int idup, istup, mothup[2], icolup[2];
@@ -223,12 +232,13 @@ vector<Particle*> convertLHE::readEvent(ifstream& input_lhe, double& weight){
   }
 
 // Test whether the end of event is reached indeed
-  for(int t=0;t<2;t++) getline(input_lhe, str_in); // Read twice to get rid of the end-of-line
-  while (str_in.find("#")!=string::npos) getline(input_lhe, str_in);
+  str_in = "";
+  while (str_in==""){ getline(input_lhe, str_in); } // Do not count empty lines or e.o.l. in the middle of events
+  while (str_in.find("#")!=string::npos){ getline(input_lhe, str_in); fline++; }
   if (str_in.find(event_end)==string::npos){
-    cerr << "End of event not reached! string is " << str_in << endl;
+    cerr << "End of event not reached! string is " << str_in << " on line " << fline << endl;
     weight=0;
-    for (int a = 0; a < collection.size(); a++){
+    for (unsigned int a = 0; a < collection.size(); a++){
       Particle* tmpPart = collection.at(a);
       delete tmpPart;
     }
